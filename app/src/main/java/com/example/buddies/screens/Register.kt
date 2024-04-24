@@ -110,6 +110,7 @@ fun Register(navController: NavHostController){
         }
     }
 
+
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(24.dp),

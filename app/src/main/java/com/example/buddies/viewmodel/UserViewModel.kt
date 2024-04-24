@@ -28,7 +28,7 @@ class UserViewModel : ViewModel() {
     private val _followingList = MutableLiveData(listOf<String>())
     val followingList : LiveData<List<String>> get() = _followingList
 
-    private val _users = MutableLiveData<UserModel>()
+    private val _users = MutableLiveData(UserModel())
 
     val users : LiveData<UserModel> get() = _users
     // val users :MutableLiveData<UserModel> get() = _users

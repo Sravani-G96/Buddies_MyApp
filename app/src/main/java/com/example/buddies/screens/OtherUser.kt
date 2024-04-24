@@ -156,7 +156,7 @@ fun OtherUsers(navHostController: NavHostController,uid: String) {
                     start.linkTo(parent.start)
                 }) {
                     Text(
-                        text = if (followerList != null && followerList!!.isNotEmpty() && followerList!!.contains(
+                        text = if (followerList != null && followerList !!.isNotEmpty() && followerList !!.contains(
                                 currentUserId
                             )
                         ) "Following" else "Follow"
@@ -176,7 +176,7 @@ fun OtherUsers(navHostController: NavHostController,uid: String) {
         }*/
 
         if (threads != null && users != null) {
-            if (threads!!.isEmpty()) {
+            if (threads !!. isEmpty()) {
                 item {
                     Text(
                         text = "User has not posted anything",
@@ -194,10 +194,10 @@ fun OtherUsers(navHostController: NavHostController,uid: String) {
                 items(threads ?: emptyList()) { pair ->
                     Divider(color = Color.Black, thickness = 1.dp)
                     val threadId = pair.thread
-                    threadAndUsers?.let {
+                    threadAndUsers ?.let {
                         ThreadItem(
                             thread = pair,
-                            users = users!!,
+                            users = users !!,
                             navHostController = navHostController,
                             userId = SharedPref.getUserName(context),
                             //threadId = threadId,
