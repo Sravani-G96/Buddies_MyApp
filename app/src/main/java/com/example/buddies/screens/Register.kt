@@ -20,6 +20,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -40,6 +43,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,6 +52,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.example.buddies.R
 //import com.example.buddies.Manifest
 import com.example.buddies.navigation.Routes
 import com.example.buddies.viewmodel.AuthViewModel
@@ -77,8 +83,20 @@ fun Register(navController: NavHostController){
         mutableStateOf<Uri?>(null)
     }
 
+    var showDialog by remember { mutableStateOf(false) }
+    // Regex pattern for email validation
+    val emailRegex = Regex("^([a-zA-Z0-9._%+-]+)?@+(?:gmail|hotmail|outlook)\\.com\$")
+    val passwordRegex = Regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#\$%^&*]).{8,}\$")
+
+
     val authViewModel : AuthViewModel = viewModel()
     val firebaseUser by authViewModel.firebaseUser.observeAsState(null)
+
+    val loading = remember { mutableStateOf(false) }
+    var passwordVisibility by remember { mutableStateOf(false) }
+    var emailError by remember { mutableStateOf(false) }
+    var PasswordError by remember { mutableStateOf(false) }
+    var userNameError by remember { mutableStateOf("") }
 
     val permissionToRequest : String  = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE){
         android.Manifest.permission.READ_MEDIA_IMAGES
@@ -149,11 +167,31 @@ fun Register(navController: NavHostController){
             singleLine = true,
             modifier = Modifier.fillMaxWidth())
 
-        OutlinedTextField(value = username, onValueChange = {username = it}, label = {
+        /*OutlinedTextField(value = username, onValueChange = {username = it}, label = {
             Text(text = "Username")
         }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             singleLine = true,
-            modifier = Modifier.fillMaxWidth())
+            modifier = Modifier.fillMaxWidth())*/
+
+        OutlinedTextField(
+            value = username,
+            onValueChange = {
+                username = it
+                userNameError = if (it.isNotEmpty()) {
+                    ""
+                } else {
+                    "Username cannot be empty"
+                }
+            },
+            isError = userNameError.isNotEmpty(),
+            label = { Text("Username") },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text
+            ),
+            singleLine = true,
+            modifier = Modifier
+                .fillMaxWidth()
+        )
 
         OutlinedTextField(value = bio, onValueChange = {bio = it}, label = {
             Text(text = "Bio")
@@ -161,22 +199,88 @@ fun Register(navController: NavHostController){
             singleLine = true,
             modifier = Modifier.fillMaxWidth())
 
-        OutlinedTextField(value = email, onValueChange = {email = it}, label = {
+        /*OutlinedTextField(value = email, onValueChange = {email = it}, label = {
             Text(text = "Email")
         }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             singleLine = true,
-            modifier = Modifier.fillMaxWidth())
+            modifier = Modifier.fillMaxWidth())*/
 
-        OutlinedTextField(value = password, onValueChange = {password = it}, label = {
+        OutlinedTextField(
+            value = email,
+            onValueChange = {
+                email = it
+                emailError = !it.matches(emailRegex)
+            },
+            label = { Text("Email") },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email
+            ),
+            singleLine = true,
+            modifier = Modifier
+                .fillMaxWidth()
+        )
+        if (emailError) {
+            Text(
+                text = "Invalid email format",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 5.dp)
+            )
+        }
+        val icon = if (passwordVisibility) {
+            painterResource(id = R.drawable.visible_icon)
+        } else {
+            painterResource(id = R.drawable.visibility_off_icon)
+        }
+
+
+        /*OutlinedTextField(value = password, onValueChange = {password = it}, label = {
             Text(text = "Password")
         }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             singleLine = true,
-            modifier = Modifier.fillMaxWidth())
+            modifier = Modifier.fillMaxWidth())*/
+
+        OutlinedTextField(
+            value = password,
+            onValueChange = {
+                password = it
+                PasswordError = !it.matches(passwordRegex)
+            },
+            label = { Text("Password") },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password
+            ),
+            singleLine = true,
+            trailingIcon = {
+                IconButton(
+                    onClick = { passwordVisibility = !passwordVisibility }
+                ) {
+                    Icon(painter = icon, contentDescription = "Toggle visibility")
+                }
+            },
+            visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            modifier = Modifier
+                .fillMaxWidth()
+        )
+        if (PasswordError) {
+            Text(
+                text = "Password must contain at least 8 characters, " +
+                        "one uppercase letter, one lowercase letter, " +
+                        "one digit, and one special character.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 5.dp)
+            )
+        }
 
         Box(modifier = Modifier.height(20.dp))
 
         ElevatedButton(onClick = {
-                                 if (name.isEmpty() ||password.isEmpty() ||email.isEmpty()|| bio.isEmpty() || imageUri == null) {
+                                 if (name.isEmpty() || username.isEmpty() ||password.isEmpty() ||email.isEmpty()|| bio.isEmpty() || imageUri == null) {
                                      Toast.makeText(
                                          context,
                                          "Please enter all details",

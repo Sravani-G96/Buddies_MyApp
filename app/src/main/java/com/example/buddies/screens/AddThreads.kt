@@ -145,7 +145,7 @@ fun AddThreads(navHostController: NavHostController){
                    top.linkTo(text.bottom)
                    start.linkTo(parent.start)
                }
-               .size(40.dp)
+               .size(36.dp)
                .clip(CircleShape),
            contentScale = ContentScale.Crop)
 
@@ -161,11 +161,11 @@ fun AddThreads(navHostController: NavHostController){
        BasicTextFieldWithHint(hint = "Start a thread ..." , value = thread,
            onValueChange = {thread = it}, modifier = Modifier
                .constrainAs(editText) {
-                   top.linkTo(userName.bottom)
-                   start.linkTo(userName.start)
-                   end.linkTo(parent.end)
+                   top.linkTo(userName.bottom, margin = 16.dp)
+                   start.linkTo(userName.start, margin = 10.dp)
+                   end.linkTo(parent.end,margin = 20.dp)
                }
-               .padding(horizontal = 8.dp, vertical = 8.dp)
+               .padding(horizontal = 20.dp, vertical = 15.dp)
                .fillMaxWidth())
 
        if (imageUri ==null){
@@ -214,7 +214,7 @@ fun AddThreads(navHostController: NavHostController){
 
        Text(text = "Anyone can reply",
            style = TextStyle(
-               fontSize = 20.sp
+               fontSize = 17.sp
            ), modifier = Modifier.constrainAs(replyText){
                start.linkTo(parent.start, margin = 12.dp)
                bottom.linkTo(parent.bottom, margin = 12.dp)
@@ -262,5 +262,5 @@ fun BasicTextFieldWithHint(hint :String, value:String, onValueChange : (String)-
 @Preview(showBackground = true)
 @Composable
 fun AddthreadsPreview(){
-    //AddThreads()
+   // AddThreads()
 }

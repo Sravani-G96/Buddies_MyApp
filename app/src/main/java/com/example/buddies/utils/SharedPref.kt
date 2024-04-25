@@ -48,5 +48,12 @@ object SharedPref {
         return sharedPreferences.getString("imageUrl","")!!
     }
 
+    fun clearData(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("Users", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
+
 
 }
