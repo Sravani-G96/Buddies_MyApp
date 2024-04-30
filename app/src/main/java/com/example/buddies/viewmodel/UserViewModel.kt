@@ -77,7 +77,6 @@ class UserViewModel : ViewModel() {
 
         firestoreDb.collection("followers").document(userId)
             .addSnapshotListener { value, error ->
-
                 val followerIds = value?.get("followerIds") as? List<String> ?: listOf()
                 _followerList.postValue(followerIds)
             }
@@ -88,7 +87,7 @@ class UserViewModel : ViewModel() {
         firestoreDb.collection("following").document(userId)
             .addSnapshotListener { value, error ->
 
-                val followingIds = value?.get("followerIds") as? List<String> ?: listOf()
+                val followingIds = value?.get("followingIds") as? List<String> ?: listOf()
                 _followingList.postValue(followingIds)
             }
     }

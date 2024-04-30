@@ -8,7 +8,7 @@ import com.example.buddies.screens.AddThreads
 import com.example.buddies.screens.BottomNav
 import com.example.buddies.screens.Home
 import com.example.buddies.screens.Login
-import com.example.buddies.screens.Notification
+
 import com.example.buddies.screens.OtherUsers
 import com.example.buddies.screens.Profile
 import com.example.buddies.screens.Register
@@ -32,10 +32,6 @@ fun NavGraph(navController: NavHostController){
 
         composable(Routes.Home.routes){
             Home(navController)
-        }
-
-        composable(Routes.Notification.routes){
-            Notification()
         }
 
         composable(Routes.Profile.routes){

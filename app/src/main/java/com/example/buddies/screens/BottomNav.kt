@@ -35,10 +35,6 @@ fun BottomNav(navController: NavHostController){
                 Home(navController)
             }
 
-            composable(route = Routes.Notification.routes){
-                Notification()
-            }
-
             composable(route = Routes.Profile.routes){
                 Profile(navController)
             }
@@ -80,12 +76,6 @@ fun MyBottomBar(navController1: NavHostController){
             Routes.AddThreads.routes,
             Icons.Rounded.Add
          ),
-
-        BottomNavItem(
-            "Notification",
-            Routes.Notification.routes,
-            Icons.Rounded.Notifications
-        ),
 
         BottomNavItem(
             "Profile",

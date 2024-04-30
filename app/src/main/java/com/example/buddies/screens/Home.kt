@@ -2,6 +2,7 @@ package com.example.buddies.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+//import androidx.compose.foundation.layout.FlowColumnScopeInstance.align
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,8 +44,9 @@ fun Home(navHostController : NavHostController) {
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically
+
         ) {
-            Text(
+            /*Text(
                 text = "Buddies",
                 style = MaterialTheme.typography.bodyLarge,
                 fontSize = 18.sp,
@@ -51,7 +54,7 @@ fun Home(navHostController : NavHostController) {
                 fontWeight = FontWeight(12),
                 modifier = Modifier.padding(start = 10.dp)
             )
-            Spacer(modifier = Modifier.padding(horizontal =2.dp))
+            Spacer(modifier = Modifier.padding(horizontal =2.dp))*/
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = null,
@@ -59,11 +62,21 @@ fun Home(navHostController : NavHostController) {
                     .size(60.dp)
                     .padding(top = 5.dp)
             )
+
+            Text(
+                text = "Home",
+               // style = MaterialTheme.typography.headlineLarge,
+                fontSize = 18.sp,
+                fontStyle = FontStyle.Normal,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(start = 110.dp)
+            )
         }
         //Spacer(modifier = Modifier.padding(vertical = 10.dp))
 
         LazyColumn {
-            items(threadAndUsers ?: emptyList<Pair<Thread, User>>()) { pairs ->
+            items(threadAndUsers ?: emptyList<Pair<Thread, User>>()) {
+                pairs ->
                 ThreadItem(
                     thread = pairs.first as ThreadModel,
                     users = pairs.second as UserModel,
@@ -72,8 +85,11 @@ fun Home(navHostController : NavHostController) {
                 )
             }
         }
+
     }
 }
+
+
 
 /*
 @Preview(showBackground = true)

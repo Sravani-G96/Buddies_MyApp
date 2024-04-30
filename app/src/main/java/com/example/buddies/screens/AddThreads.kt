@@ -138,7 +138,7 @@ fun AddThreads(navHostController: NavHostController){
            bottom.linkTo(crossPic.bottom)
        })
 
-       Image(painter = rememberAsyncImagePainter(model = SharedPref.getImage(context )),
+       Image(painter = rememberAsyncImagePainter(model = SharedPref.getImage(context)),
            contentDescription = "userimage",
            modifier = Modifier
                .constrainAs(logo) {
@@ -259,8 +259,3 @@ fun BasicTextFieldWithHint(hint :String, value:String, onValueChange : (String)-
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun AddthreadsPreview(){
-   // AddThreads()
-}

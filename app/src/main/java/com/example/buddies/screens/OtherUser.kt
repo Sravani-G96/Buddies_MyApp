@@ -156,7 +156,7 @@ fun OtherUsers(navHostController: NavHostController,uid: String) {
                     start.linkTo(parent.start)
                 }) {
                     Text(
-                        text = if (followerList != null && followerList !!.isNotEmpty() && followerList !!.contains(
+                        text = if (followerList != null && followerList!!.isNotEmpty() && followerList !!.contains(
                                 currentUserId
                             )
                         ) "Following" else "Follow"
@@ -199,10 +199,7 @@ fun OtherUsers(navHostController: NavHostController,uid: String) {
                             thread = pair,
                             users = users !!,
                             navHostController = navHostController,
-                            userId = SharedPref.getUserName(context),
-                            //threadId = threadId,
-                            // homeViewModel = homeViewModel,
-                            // threadAndUsers = it
+                            userId = SharedPref.getUserName(context)
                         )
                     }
                 }

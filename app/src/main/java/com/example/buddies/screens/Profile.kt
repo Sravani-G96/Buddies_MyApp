@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -72,7 +74,6 @@ fun Profile(navHostController: NavHostController){
         imageUrl = SharedPref.getImage(context)
     )
 
-    //userViewModel.fetchThreads(FirebaseAuth.getInstance().currentUser!!.uid)
 
     if (firebaseUser != null)
         userViewModel.fetchThreads(firebaseUser!!.uid)
@@ -195,12 +196,17 @@ fun Profile(navHostController: NavHostController){
             }
         }
 
-        items(threads ?: emptyList()){pair ->
-            ThreadItem(
-                thread = pair,
-                users = user,
-                navHostController = navHostController,
-                userId = SharedPref.getUserName(context))
+        items(threads ?: emptyList()) { pair ->
+            Divider(color = Color.Black, thickness = 1.dp)
+            val threadId = pair.thread
+            threadAndUsers?.let {
+                ThreadItem(
+                    thread = pair,
+                    users = user,
+                    navHostController = navHostController,
+                    userId = SharedPref.getUserName(context)
+                )
+            }
         }
 
 

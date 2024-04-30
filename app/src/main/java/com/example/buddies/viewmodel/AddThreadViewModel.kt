@@ -36,7 +36,12 @@ class AddThreadViewModel : ViewModel() {
     fun saveData(thread: String,
                  userId: String,
                  image: String) {
-        val threadData = ThreadModel(thread, image, userId, System.currentTimeMillis().toString())
+        val threadData = ThreadModel(
+            thread,
+            image,
+            userId,
+            System.currentTimeMillis().toString()
+            )
 
        // val userData = UserModel(email, password, name, bio, userName, toString,uid!!, context)
         userRef.child(userRef.push().key!!).setValue(threadData).addOnSuccessListener {
