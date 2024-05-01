@@ -1,9 +1,10 @@
 # Buddies App
 
 ## Description
-The Buddies App is a native Android application built using Kotlin and Jetpack Compose. It provides a platform for 
-students and faculty of the Islamic University of Science and Technology (IUST) to engage in discussions, share posts 
-with images, follow other users, view profiles.
+The Buddies App is a native Android application built using Kotlin and Jetpack Compose. 
+It provides a platform for friends and family members to share images and view profiles and 
+follow other users.
+
 
 ## Features
 - User authentication: Users can sign up, log in, and log out securely using Firebase Authentication.
@@ -18,7 +19,7 @@ with images, follow other users, view profiles.
 
 - Backend:
   - Firebase Authentication for user authentication
-  - Firebase Firestore for storing user data, threads, and comments
+  - Firebase Firestore for storing user data and threads
   - Firebase Storage for storing images associated with threads
 
 
